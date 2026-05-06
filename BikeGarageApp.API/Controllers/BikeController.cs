@@ -1,4 +1,5 @@
-﻿using BikeGarageApp.Core.Interfaces;
+﻿using BikeGarageApp.Core.Entities;
+using BikeGarageApp.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -10,37 +11,69 @@ namespace BikeGarageApp.API.Controllers
     public class BikeController(IBikeRepository bikeRepository) : ControllerBase
     {
 
-     
+
         // GET: api/<BikeController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> GetAllBikes(CancellationToken cancellationToken)
         {
-            return new string[] { "value1", "value2" };
+            var bikes = bikeRepository.GetAllBikesAsync(cancellationToken);
+
+            return Ok(bikes);
         }
 
         // GET api/<BikeController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> GetBikeById(int id, CancellationToken cancellationToken)
         {
-            return "value";
+            var bike = await bikeRepository.GetBikeByIdAsync(id, cancellationToken);
+            if (bike == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(bike);
         }
 
         // POST api/<BikeController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] Bike bike, CancellationToken cancellationToken)
         {
+            await bikeRepository.AddAsync(bike, cancellationToken);
+            return CreatedAtAction(nameof(GetBikeById), new { id = bike.Id }, bike);
         }
 
         // PUT api/<BikeController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(int id, [FromBody] Bike bike, CancellationToken cancellationToken)
         {
+            if (id != bike.Id)
+            {
+                return BadRequest();
+            }
+
+            var wasUpdated = await bikeRepository.UpdateAsync(bike, cancellationToken);
+
+            if(!wasUpdated)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+
         }
 
         // DELETE api/<BikeController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
         {
+            var wasDeleted = await bikeRepository.DeleteAsync(id, cancellationToken);
+
+            if (!wasDeleted)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
         }
     }
 }
