@@ -1,0 +1,6 @@
+@BikeGarageApp.API_HostAddress = http://localhost:5224
+
+GET {{BikeGarageApp.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

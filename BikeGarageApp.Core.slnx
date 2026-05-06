@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="BikeGarageApp.API/BikeGarageApp.API.csproj" />
+  <Project Path="BikeGarageApp.Core/BikeGarageApp.Core.csproj" />
+  <Project Path="BikeGarageApp.Infrastructure/BikeGarageApp.Infrastructure.csproj" />
+</Solution>
