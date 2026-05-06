@@ -3,6 +3,7 @@ using BikeGarageApp.Core.Interfaces;
 using BikeGarageApp.Infrastructure.Data;
 using BikeGarageApp.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Scalar.AspNetCore;
 
 namespace BikeGarageApp.API
 {
@@ -28,6 +29,7 @@ namespace BikeGarageApp.API
             if (app.Environment.IsDevelopment())
             {
                 app.MapOpenApi();
+                app.MapScalarApiReference();
             }
 
             app.UseHttpsRedirection();

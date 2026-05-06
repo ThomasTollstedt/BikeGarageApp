@@ -16,7 +16,7 @@ namespace BikeGarageApp.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllBikes(CancellationToken cancellationToken)
         {
-            var bikes = bikeRepository.GetAllBikesAsync(cancellationToken);
+            var bikes = await bikeRepository.GetAllBikesAsync(cancellationToken);
 
             return Ok(bikes);
         }
