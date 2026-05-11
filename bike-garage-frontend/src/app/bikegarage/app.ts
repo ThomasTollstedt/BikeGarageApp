@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal, isDevMode } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Client, Bike, API_BASE_URL } from '../api-client';
 
@@ -10,7 +10,9 @@ import { Client, Bike, API_BASE_URL } from '../api-client';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     Client,
-    { provide: API_BASE_URL, useValue: 'https://localhost:7211' }
+    { provide: API_BASE_URL, useValue: isDevMode() 
+        ? 'https://localhost:7211' 
+        : 'https://ca-bikegarage-api.proudisland-dc68c2ce.polandcentral.azurecontainerapps.io' }
   ]
 })
 export class AppComponent implements OnInit {
