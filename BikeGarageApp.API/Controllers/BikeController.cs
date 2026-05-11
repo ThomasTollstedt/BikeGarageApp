@@ -14,6 +14,7 @@ namespace BikeGarageApp.API.Controllers
 
         // GET: api/<BikeController>
         [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<Bike>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllBikes(CancellationToken cancellationToken)
         {
             var bikes = await bikeRepository.GetAllBikesAsync(cancellationToken);

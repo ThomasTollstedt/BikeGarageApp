@@ -20,6 +20,16 @@ namespace BikeGarageApp.API
             builder.Services.AddScoped<IBikeRepository, BikeRepository>();
             
             builder.Services.AddControllers();
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAngularApp",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200") // Angulars standardport
+                               .AllowAnyHeader()
+                               .AllowAnyMethod();
+                    });
+            });
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
@@ -33,6 +43,7 @@ namespace BikeGarageApp.API
             }
 
             app.UseHttpsRedirection();
+            app.UseCors("AllowAngularApp");
 
             app.UseAuthorization();
 

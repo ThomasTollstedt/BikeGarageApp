@@ -1,0 +1,61 @@
+<main class="garage-page">
+  <header class="hero">
+    <p class="hero-kicker">Look at your bikes wherever you are</p>
+    <h1>BikeGarageApp</h1>
+  </header>
+
+  @if (loading()) {
+    <p class="state-message">Laddar cyklar fran API:et...</p>
+  }
+
+  @if (!loading() && bikes().length > 0) {
+    <ul class="bike-list">
+      @for (bike of bikes(); track bike.id) {
+        <li class="bike-card">
+          @if (bike.urlPicture) {
+            <div class="bike-image-wrap">
+              <img class="bike-image" src="{{ bike.urlPicture }}" alt="{{ bike.modelName }}" />
+            </div>
+          } @else {
+            <div class="bike-image-wrap bike-image-wrap--placeholder">Ingen bild</div>
+          }
+
+          <div class="bike-details">
+            <h2 class="bike-title">{{ bike.modelName }}</h2>
+
+            <dl class="bike-specs">
+              <div class="spec-row">
+                <dt>Typ</dt>
+                <dd>{{ getModelLabel(bike.model) }}</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Arsmodell</dt>
+                <dd>{{ bike.year }}</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Milage</dt>
+                <dd>{{ bike.milage }} mil</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Storlek</dt>
+                <dd>{{ bike.size }}</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Utrustning</dt>
+                <dd>{{ getTierLabel(bike.tier) }}</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Serienummer</dt>
+                <dd>{{ bike.serialNumber }}</dd>
+              </div>
+            </dl>
+          </div>
+        </li>
+      }
+    </ul>
+  }
+
+  @if (!loading() && bikes().length === 0) {
+    <p class="state-message">Garaget ar tyvarr tomt.</p>
+  }
+</main>
