@@ -13,9 +13,9 @@ namespace BikeGarageApp.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder); // Alltid bra att ha kvar
+            base.OnModelCreating(modelBuilder); 
 
-            // Här bekräftar vi för EF Core exakt vilken precision Milage ska ha
+            
             modelBuilder.Entity<Bike>()
                 .Property(b => b.Milage)
                 .HasPrecision(18, 2);
